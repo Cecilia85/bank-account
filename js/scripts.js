@@ -1,21 +1,21 @@
 //business logic
-function Balance(name,balance) {
+function Balance(name,initialdeposit) {
   this.name = name;
-  this.balance = balance;
+  this.initialdeposit = initialdeposit;
 }
 
 
 
-Balance.prototype.fullCalc= function(deposit, withdrawal) {
-   this.balance+=deposit;
-   this.balance-=withdrawal;
-   return this.balance
+Balance.prototype.fullCalc= function(deposit, withdraw) {
+  this.deposit= deposit;
+  this.withdraw= withdraw;
+  return this.initialdeposit + this.deposit - this.withdraw;
 }
 
 
 function resetFields() {
 $("input#new-name").val("");
-$("input.new-initialdeposit").val("");
+$("input#new-initialdeposit").val("");
 }
 
 // user interface logic
@@ -24,40 +24,22 @@ $(document).ready(function() {
     event.preventDefault();
 
     var inputtedName = $("input#new-name").val();
-    var inputtedinitialDeposit = $("input#new-initialdeposit").val();
-    var newBalance = new Balance(inputtedName,inputtedinitialDeposit);
+    var inputtedInitialDeposit = $("input#new-initialdeposit").val();
+    var newAccount = new Balance(inputtedName,inputtedInitialDeposit);
+    $("ul#balance").html("<li><span class='balance'>" + newAccount.name + " " + newAccount.initialdeposit + "</span></li>")
+      $( "#movements").show();
 
-     $( "#balance" ).show();
-      $( "#depositWithdrawal" ).show();
+
+
+
+      $("#movements").submit(function(event) {
+      event.preventDefault();
+        var inputtedDeposit = parseInt($("input#new-deposit").val());
+        var inputtedWithdraw = parseInt($("input#new-withdraw").val());
+        var finalBalance = newAccount(inputtedDeposit, inputtedWithdraw);
+          $("ul#balance").html("<li><span class='balance'>" + finalBalance + "</span></li>");
+
+
 });
 });
-
-//
-//     $(".new-address").each(function() {
-//       var inputtedType = $(this).find("select.new-type").val();
-//       var inputtedStreet = $(this).find("input.new-street").val();
-//       var inputtedCity = $(this).find("input.new-city").val();
-//       var inputtedState = $(this).find("input.new-state").val();
-//       var newAddress = new Address(inputtedType, inputtedStreet, inputtedCity, inputtedState);
-//       newContact.addresses.push(newAddress);
-//     });
-//
-//     $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>");
-//
-//     $(".contact").last().hover(function() {
-//       $("#show-contact").fadeIn();
-//       $("#show-contact h2").text(newContact.firstName);
-//       $("#show-contact h2").text(newContact.lastName);
-//       $(".first-name").text(newContact.firstName);
-//       $(".last-name").text(newContact.lastName);
-//       $(".birthday").text(newContact.birthday);
-//       $("ul#addresses").text("");
-//       newContact.addresses.forEach(function(address) {
-//         $("ul#addresses").append("<li>" + address.fullAddress() + "</li>");
-//       });
-//     });
-//
-//     resetFields();
-//
-//   });
-// });
+});
