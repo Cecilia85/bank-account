@@ -32,14 +32,18 @@ $(document).ready(function() {
 
 
 
-      $("#movements").submit(function(event) {
-      event.preventDefault();
-        var inputtedDeposit = parseInt($("input#new-deposit").val());
-        var inputtedWithdraw = parseInt($("input#new-withdraw").val());
-        var finalBalance = newAccount(inputtedDeposit, inputtedWithdraw);
-          $("ul#balance").html("<li><span class='balance'>" + finalBalance + "</span></li>");
 
 
+          $("ul#balance").submit(function(event) {
+            event.preventDefault();
+            $("#movements").each(function(){
+              var inputtedDeposit = $(this).find("input#new-deposit").val();
+              var inputtedWithdraw = $(this).find("input#new-withdraw").val();
+              var finalBalance = new Finalbalance(inputtedDeposit, inputtedWithdraw);
+                $("ul#balance").html("<li><span class='balance'>" + finalBalance + "</span></li>");
+
+
+});
 });
 });
 });
