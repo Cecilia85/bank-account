@@ -4,21 +4,12 @@ function Balance(name,initialdeposit) {
   this.initialdeposit = initialdeposit;
 }
 
-
-
-Balance.prototype.fullCalc= function(deposit, withdraw,balance) {
-  this.deposit= deposit;
-  this.withdraw= withdraw;
-  this.balance= balance
-
-  if(this.inititialdeposit<=0){
-    return "Youre broke";
-  }else if (this.initialdeposit>0){
-  return this.balance=this.initialdeposit + this.deposit - this.withdraw;
+Balance.prototype.depositwihdraw=function(deposit,withdraw){
+  this.deposit = deposit;
+  this.withdraw = withdraw;
+  return this.initialdeposit + this.deposit - this.withdraw
 }
-return this.balance;
 
-}
 
 
 function resetFields() {
@@ -31,7 +22,7 @@ $("input#new-withdraw").val("");
 // user interface logic
 $(document).ready(function() {
   $("form#Info").submit(function(event) {
-    $("form#movements").show();
+  $("form#movements").show();
     event.preventDefault();
 
     var inputtedName = $("input#new-name").val();
@@ -43,20 +34,14 @@ $(document).ready(function() {
 });
 });
       $("form#movements").submit(function(event) {
-        event.preventDefault();
-          var inputtedDeposit = parseInt($("input#new-deposit").val());
-          var inputtedWithdraw = parseInt($("input#new-withdraw").val());
-          var finalBalance = new Finalbalance(inputtedDeposit, inputtedWithdraw);
-            $("ul#balance").append("<li><span class='balance'>" + finalBalance.balance + "</span></li>");
+      event.preventDefault();
+      $("form#movements").each(function(){
+        var inputtedDeposit = $("input#new-deposit").val();
+        var inputtedWithdraw = $("input#new-withdraw").val();
+        var finalBalance =new final(inputtedDeposit, inputtedWithdraw);
+        $("ul#balance").append("<li><span class='balance'>" + finalBalance.depositwithdraw() + "</span></li>");
 
 resetFields();
 
 });
-
-          // $("#movements").submit(function(event) {
-          //   event.preventDefault();
-          //   $("#movements").each(function(){
-          //     var inputtedDeposit = $(this).find("input#new-deposit").val();
-          //     var inputtedWithdraw = $(this).find("input#new-withdraw").val();
-          //     var finalBalance = new Finalbalance(inputtedDeposit, inputtedWithdraw);
-          //       $("ul#balance").html("<li><span class='balance'>" + finalBalance + "</span></li>");
+});
