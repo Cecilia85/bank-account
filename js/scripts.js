@@ -1,26 +1,31 @@
 //business logic
-function Info(name,initialdeposit) {
+function Info (name,lastName) {
   this.name = name;
-  this.initialdeposit = initialdeposit;
+  this.lastName= lastName;
 
 }
-function Balance(deposit,withdraw) {
-  this.deposit = deposit;
-  this.withdraw = withdraw;
+function DepositWithdraw(initialDeposit,deposit, withdraw,finalBalance){
+  this.initialDeposit= initialDeposit;
+  this.deposit= deposit;
+  this.withdraw= withdraw;
+  this.finalBalance= finalBalance;
 }
 
 Info.prototype.calculation=function(){
-  return this.name +" " + this.initialdeposit
+  return this.name + " " +this.lastName ;
 }
 
-Balance.prototype.depositwithdraw =function(){
-  return this.initialdeposit + this.deposit - this.withdraw
+DepositWithdraw.prototype.depositwithdraw =function(){
+
+
+  return this.initialDeposit + this.deposit - this.withdraw;
 }
 
 
 
 function resetFields() {
 $("input#new-name").val("");
+$("input#new-lastname").val("");
 $("input#new-initialdeposit").val("");
 $("input#new-deposit").val("");
 $("input#new-withdraw").val("");
@@ -33,8 +38,9 @@ $(document).ready(function() {
     event.preventDefault();
 
     var inputtedName = $("input#new-name").val();
-    var inputtedInitialDeposit = parseInt($("input#new-initialdeposit").val());
-    var newAccount = new Info(inputtedName,inputtedInitialDeposit);
+    var inputtedLastName= $("input#new-lastname").val();
+    var newAccount = new Info(inputtedName, inputtedLastName);
+    console.log(newAccount);
     $("ul#info").text(newAccount.calculation() )
 
 
@@ -42,9 +48,12 @@ $(document).ready(function() {
 
       $("form#movements").submit(function(event) {
       event.preventDefault();
+        var inputtedInitialDeposit = parseInt($("input#new-initial-deposit").val());
         var inputtedDeposit = parseInt($("input#new-deposit").val());
         var inputtedWithdraw = parseInt($("input#new-withdraw").val());
-        var finalBalance =new Balance(inputtedDeposit, inputtedWithdraw);
+        var finalBalance =new DepositWithdraw(inputtedInitialDeposit ,inputtedDeposit, inputtedWithdraw);
+        finalBalance.depositwithdraw();
+        console.log(finalBalance);
         $("ul#balance").text(finalBalance.depositwithdraw());
 
 
